@@ -1,4 +1,4 @@
-# 1. N-Dimensional Arrays (`arrays/`)
+# N-Dimensional Arrays (`arrays/`)
 Genomic sequences, quality scores, and variant matrices are converted into numeric array structures for mathematical manipulation.
 
 ## Memory Layout and Data Types

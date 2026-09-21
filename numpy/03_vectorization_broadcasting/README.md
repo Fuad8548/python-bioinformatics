@@ -1,4 +1,4 @@
-# 3. Vectorization and Broadcasting (`vectorization/`)
+# Vectorization and Broadcasting (`vectorization/`)
 
 ## Vectorized Distance Operations: Hamming Distance
 The Hamming distance $D_H$ between two equal-length sequences $S_1$ and $S_2$ measures the number of mismatching positions:
