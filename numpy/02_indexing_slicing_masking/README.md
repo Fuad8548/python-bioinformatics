@@ -47,12 +47,12 @@ is_gc = (seq_arr == 71) | (seq_arr == 67)
 2. **Setting up the Sliding Window**: 
 In our test case, we set `window_size=5` and `step=2`. This means the computer will look at chunks of **5 letters at a time**, and then jump forward by **2 letters** for the next chunk:
    -  **Window 1**: Starts at index 0 
-        (\rightarrow \) `A T G C G`
+        $\Longrightarrow$ `A T G C G`
    -  **Window 2**: Jumps forward 2 steps, starts at index 2 $\Longrightarrow$ `G C G A T`
-   -  **Window 3**: Jumps forward 2 steps, starts at index 4 \(\rightarrow \) `G A T C G`(and so on until it reaches the end of the sequence)
+   -  **Window 3**: Jumps forward 2 steps, starts at index 4 $\Longrightarrow$ `G A T C G`(and so on until it reaches the end of the sequence)
 1. **Calculating the Percentages (The Loop):**
 `gc_percentages[i] = np.mean(is_gc[start:end]) * 100`  => For each window, it takes the average (`np.mean`) of the True/False values inside that specific chunk.
-   - Because Python treats `True` as `1` and `False` as `0`, the average of `[True, False, True, True, False]` (which is 1, 0, 1, 1, 0) is \(\frac{3}{5} = 0.6\).Multiplying by 100 converts 0.6 into 60.0%.
+   - Because Python treats `True` as `1` and `False` as `0`; the average of `[True, False, True, True, False]` (which is 1, 0, 1, 1, 0) is $\(\frac{3}{5} = 0.6\)$.
    - Multiplying by `100` converts `0.6` into `60.0%`.
 
 **Output**:
