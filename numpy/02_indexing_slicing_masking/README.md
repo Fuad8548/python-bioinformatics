@@ -3,7 +3,8 @@ NumPy enables fast coordinate retrieval, sub-region extraction, and conditional 
 
 ## Sliding Window GC Content Calculation
 Sliding windows parse genomic sequences into overlapping intervals of size $w$ with step size $s$:
-            $$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$$
+        
+        $$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$$
 
 ```python
 import numpy as np
@@ -45,10 +46,11 @@ is_gc = (seq_arr == 71) | (seq_arr == 67)
 - This creates a flat array of True and False values (where True means it's a G or C, and False means it's an A or T).
 2. **Setting up the Sliding Window**: 
 In our test case, we set `window_size=5` and `step=2`. This means the computer will look at chunks of **5 letters at a time**, and then jump forward by **2 letters** for the next chunk:
-   -  **Window 1**: Starts at index 0 \(\rightarrow \) `A T G C G`
-   -  **Window 2**: Jumps forward 2 steps, starts at index 2 \(\rightarrow \) `G C G A T`
+   -  **Window 1**: Starts at index 0 
+        (\rightarrow \) `A T G C G`
+   -  **Window 2**: Jumps forward 2 steps, starts at index 2 \Longrightarrow `G C G A T`
    -  **Window 3**: Jumps forward 2 steps, starts at index 4 \(\rightarrow \) `G A T C G`(and so on until it reaches the end of the sequence)
-3. **Calculating the Percentages (The Loop):**
+1. **Calculating the Percentages (The Loop):**
 `gc_percentages[i] = np.mean(is_gc[start:end]) * 100`  => For each window, it takes the average (`np.mean`) of the True/False values inside that specific chunk.
    - Because Python treats `True` as `1` and `False` as `0`, the average of `[True, False, True, True, False]` (which is 1, 0, 1, 1, 0) is \(\frac{3}{5} = 0.6\).Multiplying by 100 converts 0.6 into 60.0%.
    - Multiplying by `100` converts `0.6` into `60.0%`.
@@ -62,6 +64,7 @@ Sliding Window GC (%): [60. 60. 60. 40. 60. 40. 60. 40. 60. 40. 60.]
 ## Boolean Masking for Quality Control
 
 Boolean indexing extracts sequence positions or reads that satisfy quality score thresholds based on Phred scores:
+        
         $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
 
 ```python
@@ -85,11 +88,11 @@ print(f"Pass Rate:        {np.mean(pass_mask) * 100:.1f}%")
 
 ## Breakdown of the Code Logic
     
-    \(\text{Phred\ Score\ }Q=-10\cdot \log _{10}(P_{\text{error}})\)
+    $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
 
-A score of \(Q = 20\) means the probability of a sequencing error is \[1\] in \[100\] (\(1\%\)).Your code evaluates each base's score against this threshold.Bases at indices 2 (\(Q=12\)), 5 (\(Q=9\)), and 8 (\(Q=15\)) have error probabilities much higher than \(1\%\) (e.g., \(Q=10\) means a massive \(10\%\) error rate). 
+A score of `Q = 20` means the probability of a sequencing error is **1 in 100(1%)**.Your code evaluates each base's score against this threshold.Bases at indices 2(Q=12), 5(Q=9), and 8(Q=15) have error probabilities much higher than 1% (e.g., Q=10 means a massive 10% error rate). 
 
-- `pass_mask`: Elements at indices 2 (12), 5 (9), and 8 (15) are strictly less than 20, so they evaluate to False. All other elements evaluate to `True`.
+- `pass_mask`: The array `pass_mask = phred_scores >= min_q` identifies these unreliable positions as `False` and eliminates them, ensuring that our `filtered_scores` array only contains high-confidence genomic data (**1% error rate or lower**). All other elements evaluate to `True`.
 - `filtered_scores`: Drops the three low-quality values, keeping the remaining 7 bases that meet or exceed your threshold.
 - **Pass Rate**: Since 7 out of 10 bases passed, the mean of the boolean array evaluates to 0.7, giving exactly 70.0%.
 
@@ -104,7 +107,7 @@ Bioinformatics relies on boolean masking for three major reasons:
 2. **Extreme Computational Efficiency** 
    DNA data files (like FASTQ or BAM) are massive, often gigabytes or terabytes in size. Traditional python loops (for loops with if statements) are far too slow. NumPy handles boolean masks at the hardware level using vectorized operations (C-level execution), filtering millions of data points almost instantly.
 3. **Dynamic Thresholding** 
-   Depending on the application, strictness varies. For clinical diagnostics, you might mask out everything below \[Q30\] (\(0.1\%\) error rate). For rough organism identification, \[Q20\] (\(1\%\) error rate) might suffice. Boolean masks allow you to change one parameter (min_q) to instantly update the entire dataset. 
+   Depending on the application, strictness varies. For clinical diagnostics, you might mask out everything below Q30 (0.1% error rate). For rough organism identification, Q20 (1% error rate) might suffice. Boolean masks allow us to change one parameter (`min_q`) to instantly update the entire dataset. 
 
 
 
