@@ -4,7 +4,7 @@ NumPy enables fast coordinate retrieval, sub-region extraction, and conditional 
 ## Sliding Window GC Content Calculation
 Sliding windows parse genomic sequences into overlapping intervals of size $w$ with step size $s$:
         
-        $$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$$
+$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$
 
 ```python
 import numpy as np
