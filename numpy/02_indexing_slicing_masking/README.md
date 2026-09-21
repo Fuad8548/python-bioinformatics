@@ -3,8 +3,7 @@ NumPy enables fast coordinate retrieval, sub-region extraction, and conditional 
 
 ## Sliding Window GC Content Calculation
 Sliding windows parse genomic sequences into overlapping intervals of size $w$ with step size $s$:
-        
-$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$
+        $\text{GC}\% = \frac{N_G + N_C}{w} \times 100$
 
 ```python
 import numpy as np
@@ -64,7 +63,6 @@ Sliding Window GC (%): [60. 60. 60. 40. 60. 40. 60. 40. 60. 40. 60.]
 ## Boolean Masking for Quality Control
 
 Boolean indexing extracts sequence positions or reads that satisfy quality score thresholds based on Phred scores:
-        
         $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
 
 ```python
