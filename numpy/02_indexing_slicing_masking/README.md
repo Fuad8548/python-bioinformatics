@@ -3,7 +3,7 @@ NumPy enables fast coordinate retrieval, sub-region extraction, and conditional 
 
 ## Sliding Window GC Content Calculation
 Sliding windows parse genomic sequences into overlapping intervals of size $w$ with step size $s$:
-        $\text{GC}\% = \frac{N_G + N_C}{w} \times 100$
+        $$\text{GC}\% = \frac{N_G + N_C}{w} \times 100$$
 
 ```python
 import numpy as np
@@ -85,8 +85,8 @@ print(f"Pass Rate:        {np.mean(pass_mask) * 100:.1f}%")
 ```
 
 ## Breakdown of the Code Logic
-    
-    $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
+Phred Score:
+        $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
 
 A score of `Q = 20` means the probability of a sequencing error is **1 in 100(1%)**.Your code evaluates each base's score against this threshold.Bases at indices 2(Q=12), 5(Q=9), and 8(Q=15) have error probabilities much higher than 1% (e.g., Q=10 means a massive 10% error rate). 
 
