@@ -86,7 +86,7 @@ print(f"Pass Rate:        {np.mean(pass_mask) * 100:.1f}%")
 
 ## Breakdown of the Code Logic
 Phred Score:
-        $$\text{Phred Score } Q = -10 \cdot \log_{10}(P_{\text{error}})$$
+        $$\text{Q} = -10 \cdot \log_{10}(P_{\text{error}})$$
 
 A score of `Q = 20` means the probability of a sequencing error is **1 in 100(1%)**.Your code evaluates each base's score against this threshold.Bases at indices 2(Q=12), 5(Q=9), and 8(Q=15) have error probabilities much higher than 1% (e.g., Q=10 means a massive 10% error rate). 
 
@@ -95,7 +95,8 @@ A score of `Q = 20` means the probability of a sequencing error is **1 in 100(1%
 - **Pass Rate**: Since 7 out of 10 bases passed, the mean of the boolean array evaluates to 0.7, giving exactly 70.0%.
 
 
-**Why is Boolean Masking Needed in Bioinformatics?**:
+**Why is Boolean Masking Needed in Bioinformatics?**
+
 In bioinformatics, boolean masking serves as an essential, high-performance filter to weed out unreliable sequencing data before it corrupts downstream genomic analyses.
 Next-Generation Sequencing (**NGS**) machines process millions to billions of DNA fragments simultaneously. However, chemical instabilities and optical noise mean the machine occasionally misreads a base.
 
