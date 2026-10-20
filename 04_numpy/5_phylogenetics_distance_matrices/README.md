@@ -84,26 +84,22 @@ C   [5  4  3]]
 - Distance(A, B) = 5 and Distance(A, C) = 5: Species A is equally and maximally distant from both B and C.
 
 
-
-
-
 - `species_dna.T`: This transposes the array, flipping it vertically. It turns our (3, 6) matrix into a (6, 3) matrix.
 - `np.dot(species_dna, species_dna.T)`: Multiplying a (3, 6) matrix by a (6, 3) matrix results in a clean (3, 3) matrix. NumPy automatically aligns every species row against every other species column, multiplying and summing them up instantly. This acts like a high-speed scanner counting how many times two species both share a 1 at the exact same location.
 
 ## Output:
 ```bash
---- Shared Genetic Markers Matrix ---
-[[3 1 1]
- [1 4 2]
- [1 2 3]]
-
---- Final Evolutionary Distance Matrix ---
-[[3 5 5]
- [5 2 4]
- [5 4 3]]
+           [Human] [Chimp] [Gorilla] [Mouse]
+[Human]   [[   0,      1,       2,      4],
+[Chimp]    [   1,      0,       1,      3],
+[Gorilla]  [   2,      1,       0,      3],
+[Mouse]    [   4,      3,       3,      0]]
 ```
 
-
+**The Biological Insights:**
+1. The Diagonal is Always 0: The distance between Human and Human is 0 because a sequence is identical to itself.
+2. Clonality/Proximity: Human and Chimp have a distance of only 1, meaning they are highly related and split from a common ancestor very recently.
+3. Evolutionary Distance: The Mouse has a distance of 4 from the Human. It is highly mutated compared to primates, placing it far away on the evolutionary tree.
 
 
 

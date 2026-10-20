@@ -1,28 +1,25 @@
 import numpy as np
 
-# 1. One-hot encoded genetic data for 3 distinct species (A, B, and C)
-# Rows = Species (Index 0: Species A, Index 1: Species B, Index 2: Species C)
-# Columns = 6 specific positions in a DNA sequence alignment
-# 1 = reference nucleotide match, 0 = mutation/different nucleotide
-species_dna = np.array([    
-    [1, 0, 1, 0, 1, 0],  # Species A (Highly mutated/distant)
-    [1, 1, 0, 1, 0, 1],  # Species B 
-    [0, 0, 0, 1, 1, 1]   # Species C (Very close to B)
+# 1. Aligned genomic sequences for 4 different species
+# All sequences must be the same length after alignment
+species_names = ["Human", "Chimp", "Gorilla", "Mouse"]
+sequences = np.array([
+    ['A', 'G', 'C', 'T', 'T', 'A'],  # Human
+    ['A', 'G', 'C', 'T', 'T', 'G'],  # Chimp   (1 difference from Human)
+    ['A', 'G', 'C', 'A', 'T', 'G'],  # Gorilla (2 differences from Human)
+    ['T', 'A', 'C', 'A', 'G', 'G']   # Mouse   (4 differences from Human)
 ])
 
-# 2. Extract matrix dimensions
-num_species, sequence_length = species_dna.shape
+num_species = len(species_names)
 
-# 3. Count shared genetic markers using the Matrix Dot Product
-# Transposing (.T) flips the matrix shape from (3, 6) to (6, 3)
-shared_markers = np.dot(species_dna, species_dna.T)
+# 2. Initialize a blank square matrix for our evolutionary distances
+distance_matrix = np.zeros((num_species, num_species), dtype=int)
 
-# 4. Convert shared markers into an Evolutionary Distance Matrix
-# Formula: Distance = Total Sequence Length - Shared Markers
-evolutionary_distance = sequence_length - shared_markers
+# 3. Calculate the number of mismatched letters between every pair of species
+for i in range(num_species):
+    for j in range(num_species):
+        # np.sum(sequences[i] != sequences[j]) counts how many positions do NOT match
+        distance_matrix[i, j] = np.sum(sequences[i] != sequences[j])
 
-print("--- Shared Genetic Markers Matrix ---")
-print(shared_markers)
-
-print("\n--- Final Evolutionary Distance Matrix ---")
-print(evolutionary_distance)
+print("--- Pairwise Evolutionary Distance Matrix ---")
+print(distance_matrix)
