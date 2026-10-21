@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./05_pandas/series_and_dataframes"
+    ]
+}
